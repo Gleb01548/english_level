@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "mlposproj"
+version = "0.1.0"
+description = ""
+authors = ["vectorRNspace"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^1.24.3"
+flake8 = "^6.0.0"
+scikit-learn = "^1.2.2"
+dvc = {extras = ["s3"], version = "^2.10.2"}
+lemmagen3 = "^3.5.0"
+pandas = "^2.0.1"
+torch = "2.0.0"
+torchvision = "^0.15.1"
+setuptools = "^67.7.2"
+pysrt = "^1.1.2"
+transformers = "^4.29.2"
+ipywidgets = "^8.0.6"
+tensorboard = "^2.13.0"
+catboost = "^1.2"
+notebook = "^6.5.4"
+optuna = "^3.2.0"
+nltk = "^3.8.1"
+pandarallel = "^1.6.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+my-script = "python setup.py install"

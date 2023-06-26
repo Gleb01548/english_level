@@ -1,0 +1,128 @@
+schema: '2.0'
+stages:
+  culling_table:
+    cmd: python src/pipline/pipline_culling_table.py
+    deps:
+    - path: data/raw/sub
+      md5: b118920301871210eb92c3f16125cf29.dir
+      size: 336982832
+      nfiles: 3479
+    - path: data/raw/table_pazzle.csv
+      md5: 636f85189f26056360ba2b23dcada3c4
+      size: 299191
+    - path: src/data/prepro_meta_table.py
+      md5: 40bfe5c9b4e1eaa57b9064afbcc5ecba
+      size: 1226
+    - path: src/pipline/pipline_culling_table.py
+      md5: 9f1507fa60c94190953597a399dcc93e
+      size: 444
+    outs:
+    - path: data/interim/culling_table_pazzle.csv
+      md5: 462a0f2b591c90973c655e0efb499c35
+      size: 279213
+  make_df_text:
+    cmd: python src/pipline/pipline_make_text.py
+    deps:
+    - path: data/interim/culling_table_pazzle.csv
+      md5: 462a0f2b591c90973c655e0efb499c35
+      size: 279213
+    - path: src/data/make_text.py
+      md5: a0685c7bc766957f22a3b2cf4fa9d25a
+      size: 1002
+    - path: src/pipline/pipline_make_text.py
+      md5: 2c7a8f79e2074903a9f51851610fe229
+      size: 553
+    outs:
+    - path: data/interim/df_text.csv
+      md5: f8c17699600e99e26acc64aae8180d22
+      size: 151934012
+  make_df_embedding_albert-base-v2:
+    cmd: python src/pipline/pipline_make_emb.py --name_model albert-base-v2
+    deps:
+    - path: data/interim/df_text.csv
+      md5: f8c17699600e99e26acc64aae8180d22
+      size: 151934012
+    - path: src/data/build_dataset.py
+      md5: 5007e4c9f708cc32c11f12cabef831b0
+      size: 1094
+    - path: src/features/make_emb.py
+      md5: 20ef97f62906b43d5ef7b5588e0cb760
+      size: 1685
+    - path: src/pipline/pipline_make_emb.py
+      md5: 18ff93d431ab64ca5a6056bc8ed7ec47
+      size: 764
+    outs:
+    - path: data/interim/df_emb_albert-base-v2.csv
+      md5: 9af949eec052fdb838bbb0b8dbf07d57
+      size: 28846105
+  make_df_embedding_bert_base:
+    cmd: python src/pipline/pipline_make_emb.py
+    deps:
+    - path: data/interim/df_text.csv
+      md5: f8c17699600e99e26acc64aae8180d22
+      size: 151934012
+    - path: src/data/build_dataset.py
+      md5: 5007e4c9f708cc32c11f12cabef831b0
+      size: 1094
+    - path: src/features/make_emb.py
+      md5: 20ef97f62906b43d5ef7b5588e0cb760
+      size: 1685
+    - path: src/pipline/pipline_make_emb.py
+      md5: 18ff93d431ab64ca5a6056bc8ed7ec47
+      size: 764
+    outs:
+    - path: data/interim/df_emb_bert-base-uncased.csv
+      md5: 5f689f3fffe7b1a88655c59c627d1d25
+      size: 30011050
+  make_df_embedding_bert_large:
+    cmd: python src/pipline/pipline_make_emb.py --name_model bert-large-uncased
+    deps:
+    - path: data/interim/df_text.csv
+      md5: f8c17699600e99e26acc64aae8180d22
+      size: 151934012
+    - path: src/data/build_dataset.py
+      md5: 5007e4c9f708cc32c11f12cabef831b0
+      size: 1094
+    - path: src/features/make_emb.py
+      md5: 20ef97f62906b43d5ef7b5588e0cb760
+      size: 1685
+    - path: src/pipline/pipline_make_emb.py
+      md5: 18ff93d431ab64ca5a6056bc8ed7ec47
+      size: 764
+    outs:
+    - path: data/interim/df_emb_bert-large-uncased.csv
+      md5: ecaf5ccd8f9174e758650715009b50d1
+      size: 39584399
+  make_df_embedding_albert-xxlarge-v2:
+    cmd: python src/pipline/pipline_make_emb.py --name_model albert-xxlarge-v2 --batch_size
+      80
+    deps:
+    - path: data/interim/df_text.csv
+      md5: f8c17699600e99e26acc64aae8180d22
+      size: 151934012
+    - path: src/data/build_dataset.py
+      md5: 5007e4c9f708cc32c11f12cabef831b0
+      size: 1094
+    - path: src/features/make_emb.py
+      md5: 20ef97f62906b43d5ef7b5588e0cb760
+      size: 1685
+    - path: src/pipline/pipline_make_emb.py
+      md5: 18ff93d431ab64ca5a6056bc8ed7ec47
+      size: 764
+    outs:
+    - path: data/interim/df_emb_albert-xxlarge-v2.csv
+      md5: 82e9758903efe94c16406eca1ddfd2ca
+      size: 164115465
+  preprocessing:
+    cmd: python src/pipline/pipline_preprocessing_text.py
+    deps:
+    - path: data/interim/df_text.csv
+      md5: f8c17699600e99e26acc64aae8180d22
+      size: 151934012
+    - path: src/features/preprocessing_text.py
+      md5: e91db81cf461f425dda5e58777a886ab
+      size: 728
+    outs:
+    - path: data/interim/df_preprocessed_text.csv
+      md5: efc1d82fc6d3ec321ee110066612fd0f
+      size: 819968028

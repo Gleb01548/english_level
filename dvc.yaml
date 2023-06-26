@@ -1,0 +1,67 @@
+stages:
+  culling_table:
+    cmd: python src/pipline/pipline_culling_table.py
+    deps:
+      - data/raw/table_pazzle.csv
+      - data/raw/sub
+      - src/data/prepro_meta_table.py
+      - src/pipline/pipline_culling_table.py
+    outs:
+      - data/interim/culling_table_pazzle.csv
+
+  make_df_text:
+    cmd: python src/pipline/pipline_make_text.py
+    deps:
+      - data/interim/culling_table_pazzle.csv
+      - src/data/make_text.py
+      - src/pipline/pipline_make_text.py
+    outs:
+      - data/interim/df_text.csv
+
+  make_df_embedding_bert_base:
+    cmd: python src/pipline/pipline_make_emb.py
+    deps:
+      - data/interim/df_text.csv
+      - src/data/build_dataset.py
+      - src/features/make_emb.py
+      - src/pipline/pipline_make_emb.py
+    outs:
+      - data/interim/df_emb_bert-base-uncased.csv
+
+  make_df_embedding_bert_large:
+    cmd: python src/pipline/pipline_make_emb.py --name_model bert-large-uncased
+    deps:
+      - data/interim/df_text.csv
+      - src/data/build_dataset.py
+      - src/features/make_emb.py
+      - src/pipline/pipline_make_emb.py
+    outs:
+      - data/interim/df_emb_bert-large-uncased.csv
+
+  make_df_embedding_albert-base-v2:
+    cmd: python src/pipline/pipline_make_emb.py --name_model albert-base-v2
+    deps:
+      - data/interim/df_text.csv
+      - src/data/build_dataset.py
+      - src/features/make_emb.py
+      - src/pipline/pipline_make_emb.py
+    outs:
+      - data/interim/df_emb_albert-base-v2.csv
+
+  make_df_embedding_albert-xxlarge-v2:
+    cmd: python src/pipline/pipline_make_emb.py --name_model albert-xxlarge-v2 --batch_size 80
+    deps:
+      - data/interim/df_text.csv
+      - src/data/build_dataset.py
+      - src/features/make_emb.py
+      - src/pipline/pipline_make_emb.py
+    outs:
+      - data/interim/df_emb_albert-xxlarge-v2.csv
+
+  preprocessing:
+    cmd: python src/pipline/pipline_preprocessing_text.py
+    deps:
+      - data/interim/df_text.csv
+      - src/features/preprocessing_text.py
+    outs:
+      - data/interim/df_preprocessed_text.csv

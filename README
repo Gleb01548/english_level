@@ -1,0 +1,8 @@
+This project is designed to determine the difficulty of the English language using subtitles.  The titles of the films and their scores are taken from https://puzzle-movies.com. 
+
+A reference to the raw data: https://disk.yandex.ru/d/j8Uv_FEyszzEPA
+A reference to the interim data: https://disk.yandex.ru/d/GLRu4kczRVWtVg
+
+if you want work start this project on you computer, you need use poetry for install environment and dvc for start pipline. 
+
+The data is not pre-processed in notebook, but through pipline (src + dvc). If you want start pipline use 'dvc repro'.
