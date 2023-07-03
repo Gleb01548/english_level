@@ -6,3 +6,11 @@ A reference to the interim data: https://disk.yandex.ru/d/GLRu4kczRVWtVg
 if you want work start this project on you computer, you need use poetry for install environment and dvc for start pipline. 
 
 The data is not pre-processed in notebook, but through pipline (src + dvc). If you want start pipline use 'dvc repro'.
+
+Used:
+- embeddings (base, large BERT and base, large ALBERT) + catboost;
+- catboost with text-feature and embeddings (specified the embeddings in a special parameter);
+- RNN; 
+- bertclassifier. 
+
+Best result catboost with text.

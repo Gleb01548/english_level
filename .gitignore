@@ -1,1 +1,4 @@
 data
+models
+notebook/catboost_info
+notebook/results
